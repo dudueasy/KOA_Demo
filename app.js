@@ -2,6 +2,7 @@ const path = require('path');
 
 const Koa = require('koa');
 const json = require('koa-json');
+const bodyParser = require('koa-bodyparser');
 const render = require('koa-ejs');
 const Router = require('koa-router');
 
@@ -26,12 +27,15 @@ render(app, {
 // Json Prettier Middleware
 app.use(json());
 
+// Mount Koa Body Parser
+app.use(bodyParser());
+
 
 // Simple Koa Middleware
 // app.use(async ctx => ctx.body = "Hello World");
 
 
-// Middleware functions
+// Middleware function
 const index = async (ctx, next) => {
   await ctx.render('index',
     {
@@ -40,14 +44,22 @@ const index = async (ctx, next) => {
     });
 };
 
-const addThing = async (ctx, next) => {
+const showAddPage = async (ctx, next) => {
   await ctx.render('add');
+};
+
+const addThing = async (ctx, next) => {
+  const {body} = ctx.request;
+  things.push(body.thing);
+  ctx.redirect('/')
 };
 
 
 // Router Middleware
 router.get('/', index);
-router.get('/add', addThing);
+router.get('/add', showAddPage);
+router.post('/add', addThing);
+
 router.get('/test', async (ctx, next) => {
   ctx.body = 'Hello Test';
 });
