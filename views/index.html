@@ -1,1 +1,6 @@
 <h1><%- title %></h1>
+<ul class="list-group">
+    <% things.forEach(function(thing){ %>
+    <li class="list-group-item"><%= thing %></li>
+    <% }); %>
+</ul>
