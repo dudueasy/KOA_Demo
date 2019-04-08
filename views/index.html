@@ -1,6 +1,8 @@
 <h1><%- title %></h1>
 <ul class="list-group">
-    <% things.forEach(function(thing){ %>
-    <li class="list-group-item"><%= thing %></li>
+    <% things.forEach(function(thing, index){ %>
+    <li class="list-group-item" style="display: flex"><%= thing %>
+        <a href="/delete/<%= index %>" class="btn btn-danger ml-auto btn-sm">Delete</a>
+    </li>
     <% }); %>
 </ul>
